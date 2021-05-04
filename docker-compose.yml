@@ -1,0 +1,31 @@
+version: '3.3'
+
+services:
+
+  backend_dev:
+    container_name: Backend_Dev
+    build:
+      context: ./
+      dockerfile: dockerfile
+    volumes:
+      - .:/usr/src/app
+      - '/usr/src/app/node_modules'
+    environment:
+      - NODE_ENV=test
+      - CHOKIDAR_USEPOLLING=true
+    depends_on:
+      - db_mongo
+    links:
+      - db_mongo
+    ports:
+      - 3001:3001
+    stdin_open: true
+    tty: true
+    
+  db_mongo:
+    image: mongo:4.2.0
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=testUser
+      - MONGO_INITDB_ROOT_PASSWORD=TestUserPASSWD1234
