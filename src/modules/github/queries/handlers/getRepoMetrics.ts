@@ -72,7 +72,7 @@ export class GetRepoMetricsHandler implements IQueryHandler<GetRepoMetricsQuery>
       return pipeResponse(200, 'Consolidated data retrieved.', { ...params }, { stats })
     }
 
-    // Command pipeline
+    // Query pipeline
     const pipeline = basePipe(
       searchRepo,
       storeMetrics,
@@ -80,10 +80,10 @@ export class GetRepoMetricsHandler implements IQueryHandler<GetRepoMetricsQuery>
       calcMetrics
     )
 
-    // Command pipeline run
+    // Query pipeline run
     const queryResponse = await pipeline({ initialParams: params, ipAddress })
 
-    // Command return
+    // Query return
     return baseResponse(
       queryResponse.status.code,
       queryResponse.status.message,

@@ -1,4 +1,3 @@
-  
 // Nest Libs
 import { IQuery } from '@nestjs/cqrs'
 

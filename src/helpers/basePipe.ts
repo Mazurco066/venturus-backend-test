@@ -1,5 +1,7 @@
+// Types
 import { IPipeResponse } from './pipeResponse'
 
+// Helper
 export default (...fns: any) => async (initialParameter: any): Promise<IPipeResponse> => {
 	const normalizeParameter = (parameter: any): IPipeResponse => {
 		let p = parameter || {}

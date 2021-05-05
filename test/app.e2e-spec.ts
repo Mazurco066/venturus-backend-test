@@ -76,9 +76,41 @@ describe('GithubController (e2e)', () => {
       .expect(404)
       .expect('Content-Type', /json/)
       .then(response => {
-        // Happy Path :)
         expect(response.body.status.code).toBe(404)
         expect(response.body.status.message).toBe('Issues not found.')
+      })
+  })
+
+  // Daily enpoint
+  it('/v1/github/repoMetricsAlongTime (POST) - Happy Path', async () => {
+    return await request(app.getHttpServer())
+      .post('/github/repoMetricsAlongTime')
+      .send({
+        "identifiers": [
+          "facebook/react",
+          "vuejs/vue"
+        ]
+      })
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .then(response => {
+        // Happy Path :)
+        expect(response.body.data).toBeDefined()
+        expect(Object.keys(response.body.data).length).toBe(2)
+      })
+  })
+
+  // Empty parameters
+  it('/v1/github/repoMetricsAlongTime (POST) - Empty results', async () => {
+    return await request(app.getHttpServer())
+      .post('/github/repoMetricsAlongTime')
+      .send({ "identifiers": [] })
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .then(response => {
+        // Happy Path :)
+        expect(response.body.data).toBeDefined()
+        expect(Object.keys(response.body.data).length).toBe(0)
       })
   })
 })

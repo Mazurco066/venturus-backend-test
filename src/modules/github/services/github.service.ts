@@ -1,8 +1,8 @@
 // Nest Libs
 import { Injectable } from '@nestjs/common'
 import { QueryBus } from '@nestjs/cqrs'
-import { GetRepoMetricsDTO } from '../dtos'
-import { GetRepoMetricsQuery } from '../queries/impl'
+import { GetRepoMetricsDTO, GetRepoMetricsAlongTimeDTO } from '../dtos'
+import { GetRepoMetricsQuery, GetRepoMetricsAlongTimeQuery } from '../queries/impl'
 
 @Injectable()
 export class GithubService {
@@ -21,5 +21,13 @@ export class GithubService {
    */
    async getRepoMetrics(params: GetRepoMetricsDTO, ipAddress: string) {
     return await this.queryBus.execute(new GetRepoMetricsQuery(params, ipAddress))
+  }
+
+  /**
+   * Get Repo metrics along time service
+   * @param params - Check GetRepoMetricsDTO for details
+   */
+   async getRepoMetricsAlongTime(params: GetRepoMetricsAlongTimeDTO) {
+    return await this.queryBus.execute(new GetRepoMetricsAlongTimeQuery(params))
   }
 }

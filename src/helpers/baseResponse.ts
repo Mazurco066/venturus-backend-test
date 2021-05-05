@@ -1,3 +1,4 @@
+// Types
 export interface IBaseResponse {
   status: {
     code: number
@@ -6,6 +7,7 @@ export interface IBaseResponse {
   data: any
 }
 
+// Helper
 export default (
   status: number,
   msg: string,

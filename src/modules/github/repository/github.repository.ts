@@ -103,13 +103,10 @@ export class GithubRepository implements IGithubRepository {
       
       // Search issues on the first page, returns empty if there is no issues
       const { data: list, headers: { link } } = await getIssues([...queryParams, { name: 'page', value: 1 }]);
-      if (!list.length)
-        return baseResponse(404, 'No issues found', [])
+      if (!list.length) return baseResponse(404, 'No issues found', [])
 
       // Fetching data from remaining pages
-      const lastPage = getLastPageFromURL(link)
-      const remainingPages = getMiddleIssuePages(lastPage)
-      const promises = remainingPages.map((page: number) =>
+      const promises = getMiddleIssuePages(getLastPageFromURL(link)).map((page: number) =>
         getIssues([...queryParams, { name: 'page', value: page }]))
       const allIssues = await Promise.all(promises)
 

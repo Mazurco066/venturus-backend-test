@@ -1,3 +1,4 @@
+// Types
 export interface IPipeResponse {
   status: {
     code: number
@@ -6,6 +7,7 @@ export interface IPipeResponse {
   [propName: string]: any
 }
 
+// Helper
 export default (
   statusCode: number,
   statusmessage: string,
@@ -15,13 +17,13 @@ export default (
 ): IPipeResponse => {
   const message = `${statusmessage}${(messageList.length > 0 ? ': ' + messageList.join(' | ') : '')}`
   return {
-      ...currentParameter,
-      ...{
-          status: {
-              code: statusCode,
-              message: message
-          },
-          ...newObject
-      }
+    ...currentParameter,
+    ...{
+      status: {
+        code: statusCode,
+        message: message
+      },
+      ...newObject
+    }
   }
 }
