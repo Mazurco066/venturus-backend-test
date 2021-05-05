@@ -10,7 +10,7 @@ export class SearchTrack extends Document {
   @Prop({ required: false, default: () => v4(), unique: true })
   id: string
 
-  @Prop({ required: true, default: '', unique: true })
+  @Prop({ required: true, default: '' })
   ipAddress: string
 
   @Prop({ required: true, default: '' })

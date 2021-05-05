@@ -73,6 +73,7 @@ export class GithubRepository implements IGithubRepository {
 
 
     } catch (_) {
+      console.log('Error: ', _)
       return baseResponse(500, 'Error while storing data into mongodb')
     }
   }
