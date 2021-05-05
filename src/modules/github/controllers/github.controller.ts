@@ -1,5 +1,5 @@
 // Dependencies
-import { Controller, Get, Query, Res } from '@nestjs/common'
+import { Controller, Get, Query, Res, Req } from '@nestjs/common'
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { GetRepoMetricsDTO } from '../dtos'
 import { GithubService } from '../services'
@@ -31,9 +31,11 @@ export class GithubController {
   })
   async getRepoMetrics(
     @Res() res: any,
+    @Req() req: any,
     @Query() params: GetRepoMetricsDTO
   ) {
-    const r = await this.service.getRepoMetrics(params)
+    const clientIpAddress = (req.headers['x-forwarded-for'] || '').split(',')[0] || req.connection.remoteAddress
+    const r = await this.service.getRepoMetrics(params, clientIpAddress)
     return res.status(r.status.code).send(r)
   }
 }

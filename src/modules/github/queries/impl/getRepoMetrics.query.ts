@@ -7,5 +7,8 @@ import { GetRepoMetricsDTO } from '../../dtos'
 
 // Query
 export class GetRepoMetricsQuery implements IQuery {
-  constructor(public readonly params: GetRepoMetricsDTO) {}
+  constructor(
+    public readonly params: GetRepoMetricsDTO,
+    public readonly ipAddress: string
+  ) {}
 }

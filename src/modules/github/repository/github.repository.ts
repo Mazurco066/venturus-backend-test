@@ -11,6 +11,7 @@ import { getMiddleIssuePages, getLastPageFromURL } from 'src/utils'
 export interface IGithubRepository {
   searchRepositories(params: GetRepoMetricsDTO): Promise<IBaseResponse>
   searchOpenedIssues(repo: string, queryParameters: IQueryParameters[]) : Promise<IBaseResponse>
+  storeSearchHistory(ipAddress: string, repo: string): Promise<IBaseResponse>
 }
 
 export interface IQueryParameters {
@@ -54,6 +55,29 @@ export class GithubRepository implements IGithubRepository {
   }
 
   /**
+   * Store search data into mongodb
+   * @param ipAddress - ip from caller
+   * @param repo - Search text
+   * @returns - The created register
+   */
+  async storeSearchHistory(ipAddress: string, repo: string) {
+    try {
+
+      const r = await this.schema.create({
+        ipAddress,
+        searchString: repo
+      })
+
+      if (r) return baseResponse(200, 'Search History Updated', r)
+      else return baseResponse(500, 'Could not store search history into mongodb')
+
+
+    } catch (_) {
+      return baseResponse(500, 'Error while storing data into mongodb')
+    }
+  }
+
+  /**
    * Return all issues from a github repository
    * @param repo - repository name
    * @param queryParameters - Aditional query parameters to github API
@@ -79,7 +103,7 @@ export class GithubRepository implements IGithubRepository {
       // Search issues on the first page, returns empty if there is no issues
       const { data: list, headers: { link } } = await getIssues([...queryParams, { name: 'page', value: 1 }]);
       if (!list.length)
-        return baseResponse(200, 'No issues found', [])
+        return baseResponse(404, 'No issues found', [])
 
       // Fetching data from remaining pages
       const lastPage = getLastPageFromURL(link)
@@ -96,7 +120,6 @@ export class GithubRepository implements IGithubRepository {
       // Returning issues
       return baseResponse(200, 'Issues from project recovered', issuesResults)
       
-
     } catch(_) {
       return baseResponse(500, 'Error while searching github')
     } 

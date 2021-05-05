@@ -19,7 +19,7 @@ export class GithubService {
    * Get Repo metrics service
    * @param params - Check GetRepoMetricsDTO for details
    */
-   async getRepoMetrics(params: GetRepoMetricsDTO) {
-    return await this.queryBus.execute(new GetRepoMetricsQuery(params))
+   async getRepoMetrics(params: GetRepoMetricsDTO, ipAddress: string) {
+    return await this.queryBus.execute(new GetRepoMetricsQuery(params, ipAddress))
   }
 }
