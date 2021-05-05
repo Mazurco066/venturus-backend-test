@@ -11,6 +11,7 @@ A Backend Project using the following frameworks/libraries/pattenrns:
 * **Fastfy**
 * **DDD**
 * **CQRS**
+* **Mongodb**
 
 ## Setup
 
@@ -25,6 +26,10 @@ yarn dev
 # For production build run
 yarn build | yarn prod
 ```
+
+## !!! Important !!!
+
+Do not forget to generate your github personal access token on [Github API Docs](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token).
 
 ## API Docs
 
