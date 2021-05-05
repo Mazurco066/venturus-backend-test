@@ -2,16 +2,17 @@
 import { Module, OnModuleInit, Controller, Get, Res } from '@nestjs/common'
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { MongooseModule } from '@nestjs/mongoose'
-import { readFileSync } from 'fs'
-import { resolve } from 'path'
+//import { readFileSync } from 'fs'
+//import { resolve } from 'path'
 import { baseResponse } from '../helpers'
 import { databaseURI } from '../common/configs'
 import { config } from 'dotenv'
 import { GithubModule } from './github/github.module'
 
 // API Version
-const pj = readFileSync(resolve(__dirname, '../../package.json'), 'utf-8')
-const { version } = JSON.parse(pj)
+//const pj = readFileSync(resolve(__dirname, '../../package.json'), 'utf-8')
+//const { version } = JSON.parse(pj)
+const version = '1.0.0'
 
 // Dotenv fetch
 config()
