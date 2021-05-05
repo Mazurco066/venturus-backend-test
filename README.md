@@ -27,6 +27,18 @@ yarn dev
 yarn build | yarn prod
 ```
 
+### Testing
+```sh
+# unit tests
+$ yarn test
+
+# e2e tests
+$ yarnn test:e2e
+
+# test coverage
+$ yarn test:cov
+```
+
 ## !!! Important !!!
 
 Do not forget to generate your github personal access token on [Github API Docs](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token).

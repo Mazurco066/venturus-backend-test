@@ -5,8 +5,10 @@ import { Document } from 'mongoose'
 // Utils
 import { v4 } from 'uuid'
 
+export type SearchTrackDocument = SearchTrack & Document
+
 @Schema()
-export class SearchTrack extends Document {
+export class SearchTrack {
   @Prop({ required: false, default: () => v4(), unique: true })
   id: string
 

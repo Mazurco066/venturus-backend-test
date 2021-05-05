@@ -4,7 +4,7 @@ import { InjectModel } from '@nestjs/mongoose'
 import { IBaseResponse, baseResponse, httpClient } from '../../../helpers'
 import { Model } from 'mongoose'
 import { GetRepoMetricsDTO } from '../dtos'
-import { SearchTrack } from '../schema'
+import { SearchTrack, SearchTrackDocument } from '../schema'
 import { getMiddleIssuePages, getLastPageFromURL } from '../../../utils'
 
 // Interface
@@ -28,7 +28,7 @@ export class GithubRepository implements IGithubRepository {
    * @param schema - Database communication
    */
   constructor(
-    @InjectModel(SearchTrack.name) private schema: Model<SearchTrack>
+    @InjectModel(SearchTrack.name) private schema: Model<SearchTrackDocument>
   ) {}
 
   /**
@@ -71,9 +71,7 @@ export class GithubRepository implements IGithubRepository {
       if (r) return baseResponse(200, 'Search History Updated', r)
       else return baseResponse(500, 'Could not store search history into mongodb')
 
-
     } catch (_) {
-      console.log('Error: ', _)
       return baseResponse(500, 'Error while storing data into mongodb')
     }
   }
