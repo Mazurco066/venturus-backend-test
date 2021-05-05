@@ -5,7 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose'
 import { readFileSync } from 'fs'
 import { resolve } from 'path'
 import { baseResponse } from '../helpers'
-import { databaseURI } from 'src/common/configs'
+import { databaseURI } from '../common/configs'
 import { config } from 'dotenv'
 import { GithubModule } from './github/github.module'
 

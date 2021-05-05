@@ -3,7 +3,7 @@ import { Inject } from '@nestjs/common'
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs'
 import { IGithubRepository} from '../../repository'
 import { GetRepoMetricsQuery } from '../impl'
-import { baseResponse, extractAverage, extractDeviation, pipeResponse, basePipe } from 'src/helpers'
+import { baseResponse, extractAverage, extractDeviation, pipeResponse, basePipe } from '../../../../helpers'
 
 // Query
 @QueryHandler(GetRepoMetricsQuery)

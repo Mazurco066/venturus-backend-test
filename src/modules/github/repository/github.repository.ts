@@ -1,11 +1,11 @@
 // Dependencies
 import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
-import { IBaseResponse, baseResponse, httpClient } from 'src/helpers'
+import { IBaseResponse, baseResponse, httpClient } from '../../../helpers'
 import { Model } from 'mongoose'
 import { GetRepoMetricsDTO } from '../dtos'
 import { SearchTrack } from '../schema'
-import { getMiddleIssuePages, getLastPageFromURL } from 'src/utils'
+import { getMiddleIssuePages, getLastPageFromURL } from '../../../utils'
 
 // Interface
 export interface IGithubRepository {

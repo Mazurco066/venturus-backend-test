@@ -1,5 +1,5 @@
 // Dependencies
-import { differenceBetweenDates } from 'src/utils'
+import { differenceBetweenDates } from '../utils'
 
 // Helper
 const extractAverage = (data: Array<any>) => {
