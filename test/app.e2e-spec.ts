@@ -57,7 +57,7 @@ describe('GithubController (e2e)', () => {
   // Consilidation endpoint (online)
   it('/v1/github/repoMetrics (GET) - Happy Path', async () => {
     return await request(app.getHttpServer())
-      .get('/github/repoMetrics?repo=react')
+      .get('/github/repoMetrics?repo=react&username=mazurco066')
       .expect(200)
       .expect('Content-Type', /json/)
       .then(response => {
@@ -72,7 +72,7 @@ describe('GithubController (e2e)', () => {
   // Not found endpoint
   it('/v1/github/repoMetrics (GET) - Not Found Path', async () => {
     return await request(app.getHttpServer())
-      .get('/github/repoMetrics?repo=sfese')
+      .get('/github/repoMetrics?repo=sfese&username=mazurco066')
       .expect(404)
       .expect('Content-Type', /json/)
       .then(response => {

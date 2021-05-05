@@ -16,7 +16,13 @@ export class SearchTrack {
   ipAddress: string
 
   @Prop({ required: true, default: '' })
+  username: string
+
+  @Prop({ required: true, default: '' })
   searchString: string
+
+  @Prop({ required: false, default: '' })
+  result: string
 
   @Prop({ required: false, default: Date.now, select: false })
   createdAt?: Date

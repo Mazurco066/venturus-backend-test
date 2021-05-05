@@ -11,7 +11,7 @@ import { getMiddleIssuePages, getLastPageFromURL } from '../../../utils'
 export interface IGithubRepository {
   searchRepositories(params: GetRepoMetricsDTO): Promise<IBaseResponse>
   searchOpenedIssues(repo: string, queryParameters: IQueryParameters[]) : Promise<IBaseResponse>
-  storeSearchHistory(ipAddress: string, repo: string): Promise<IBaseResponse>
+  storeSearchHistory(ipAddress: string, repo: string, username: string, result: string): Promise<IBaseResponse>
 }
 
 export interface IQueryParameters {
@@ -60,12 +60,14 @@ export class GithubRepository implements IGithubRepository {
    * @param repo - Search text
    * @returns - The created register
    */
-  async storeSearchHistory(ipAddress: string, repo: string) {
+  async storeSearchHistory(ipAddress: string, repo: string, username: string, result: string) {
     try {
 
       const r = await this.schema.create({
         ipAddress,
-        searchString: repo
+        searchString: repo,
+        username,
+        result
       })
 
       if (r) return baseResponse(200, 'Search History Updated', r)

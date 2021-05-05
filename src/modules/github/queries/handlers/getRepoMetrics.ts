@@ -26,17 +26,6 @@ export class GetRepoMetricsHandler implements IQueryHandler<GetRepoMetricsQuery>
     const { params, ipAddress } = query
 
     // Step 01 - search repo
-    const storeMetrics = async (params: any) => {
-      const { initialParams: { repo }, ipAddress } = params
-      const r = await this.repository.storeSearchHistory(ipAddress, repo)
-      if (r.status.code !== 200)
-        return pipeResponse(r.status.code, r.status.message)
-      return pipeResponse(200, 'Search history updated.', { ...params }, {
-        storedSearch: r.data
-      })
-    }
-    
-    // Step 02 - store metrics
     const searchRepo = async (params: any) => {
       const { initialParams } = params
       const r = await this.repository.searchRepositories(initialParams)
@@ -45,6 +34,17 @@ export class GetRepoMetricsHandler implements IQueryHandler<GetRepoMetricsQuery>
       }
       return pipeResponse(200, 'Repository Found.', { ...params }, {
         foundRepo: r.data[0]
+      })
+    }
+    
+    // Step 02 - store metrics
+    const storeMetrics = async (params: any) => {
+      const { initialParams: { repo, username }, ipAddress, foundRepo: { full_name } } = params
+      const r = await this.repository.storeSearchHistory(ipAddress, repo, username, full_name)
+      if (r.status.code !== 200)
+        return pipeResponse(r.status.code, r.status.message)
+      return pipeResponse(200, 'Search history updated.', { ...params }, {
+        storedSearch: r.data
       })
     }
 
@@ -74,8 +74,8 @@ export class GetRepoMetricsHandler implements IQueryHandler<GetRepoMetricsQuery>
 
     // Command pipeline
     const pipeline = basePipe(
-      storeMetrics,
       searchRepo,
+      storeMetrics,
       retrieveIssues,
       calcMetrics
     )
