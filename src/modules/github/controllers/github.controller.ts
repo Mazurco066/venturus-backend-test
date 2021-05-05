@@ -27,7 +27,7 @@ export class GithubController {
   })
   @ApiResponse({
     status: 200,
-    description: 'Return the consolidade data as Array'
+    description: 'Return the consolidade data in days from a single github repository in data prop: { projectName: "libx", numberOfIssues: 5, average: 7, deviation }'
   })
   async getRepoMetrics(
     @Res() res: any,
@@ -46,11 +46,11 @@ export class GithubController {
    @Post('/repoMetricsAlongTime')
    @ApiOperation({
      summary: 'Get Repository Metrics Along Time',
-     description: 'Get repository matrics based on search and consolidates to use into a dashboard.'
+     description: 'Fetch lists divided by day with total issues from desired repositories.'
    })
    @ApiResponse({
      status: 200,
-     description: 'Return the consolidade data as Array'
+     description: 'Return the grouped array inside data prop: { libx: { totalIssues: 999, dailyIssues: [ { date: "2016-09-09T09:51:01.000Z", numberOfIssues: 1 } ] } }'
    })
    async getRepoMetricsAlongTime(
      @Res() res: any,
