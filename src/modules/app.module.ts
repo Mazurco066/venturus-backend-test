@@ -1,20 +1,13 @@
-// Nest Libs
+// Dependencies
 import { Module, OnModuleInit, Controller, Get, Res } from '@nestjs/common'
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
+import { MongooseModule } from '@nestjs/mongoose'
 import { readFileSync } from 'fs'
 import { resolve } from 'path'
-
-// Helpers
 import { baseResponse } from '../helpers'
-
-// Configuration
-import { options } from '../common/configs'
-
-// Modules
-import { GithubModule } from './github/github.module'
-
-// Dotenv
+import { databaseURI } from 'src/common/configs'
 import { config } from 'dotenv'
+import { GithubModule } from './github/github.module'
 
 // API Version
 const pj = readFileSync(resolve(__dirname, '../../package.json'), 'utf-8')
@@ -30,7 +23,7 @@ class RootController {
   @Get()
   @ApiOperation({ summary: 'API Version', description: 'Returns current API Version' })
   @ApiResponse({ status: 200, description: 'Return the version number inside status object' })
-  getVersion(@Res() res) {
+  getVersion(@Res() res: any) {
     res.status(200).send(
       baseResponse(200, `Venturus Backend Test - version: ${version}`)
     )
@@ -39,7 +32,15 @@ class RootController {
 
 // Module
 @Module({
-  imports: [ GithubModule ],
+  imports: [
+    // Database connection
+    MongooseModule.forRoot(databaseURI, {
+      useNewUrlParser: true,
+      dbName: process.env.MONGODB_DATABASE
+    }),
+    // Modules
+    GithubModule
+  ],
   controllers: [ RootController ]
 })
 export class AppModule implements OnModuleInit {

@@ -1,3 +1,1 @@
-export const CommandHandlers = [
-
-]
+export const CommandHandlers = []
